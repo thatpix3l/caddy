@@ -37,14 +37,10 @@ jobs:
           NUM='\([0-9]+\)'
 
           tag_to_versions() {
-            sed -e "s/v$NUM\.$NUM\.$NUM/MAJOR=\1 MINOR=\2 PATCH=\3/"
+            sed -e "s/v$NUM\.$NUM\.$NUM/MAJOR=\1\nMINOR=\2\nPATCH=\3/\n"
           }
           
-          VERSION_CHUNKS="$(printf '%s' "$TAG" | tag_to_versions "$TAG")"
-          VERSION_CHUNKS=($VERSION_CHUNKS)
-
-          for chunk in VERSION_CHUNKS; do
-            echo "$chunk"
+          printf '%s' "$TAG" | tag_to_versions "$TAG" | while read -r chunk; do
             echo "$chunk" >> $GITHUB_ENV
           done
     
