@@ -37,7 +37,7 @@ jobs:
           NUM='\([0-9]+\)'
           
           tag_to_versions() {
-            sed -e "s:v$NUM\.$NUM\.$NUM:MAJOR=\1\nMINOR=\2\nPATCH=\3:\n"
+            sed -e "s:v$NUM\.$NUM\.$NUM:MAJOR=\1\nMINOR=\2\nPATCH=\3\n:"
           }
           
           printf '%s' "$TAG" | tag_to_versions "$TAG"
