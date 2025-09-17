@@ -31,14 +31,21 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{version}}
     
-      - name: Store Version
+      - name: Parse Commit Tag Version
         run: |
-          for i in 1 2 3; do
-            echo "${NAMES[$i]}=${TAGS[$i]#caddy:}" >> $GITHUB_ENV
+          TAG=${{ github.ref_name }}
+          NUM='\([0-9]+\)'
+
+          tag_to_versions() {
+            sed -e "s/v$NUM\.$NUM\.$NUM/MAJOR=\1 MINOR=\2 PATCH=\3/"
+          }
+          
+          VERSION_CHUNKS="$(printf '%s' "$TAG" | tag_to_versions "$TAG")"
+          VERSION_CHUNKS=($VERSION_CHUNKS)
+
+          for chunk in VERSION_CHUNKS; do
+            echo "$chunk" >> $GITHUB_ENV
           done
-        env:
-          TAGS: ${{ fromJSON(steps.meta.outputs.json).tags }}
-          NAMES: (null, MAJOR, MINOR, PATCH)
     
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
