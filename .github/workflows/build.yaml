@@ -32,18 +32,7 @@ jobs:
             type=semver,pattern={{version}}
     
       - name: Parse Commit Tag Version
-        run: |
-          TAG="${{ github.ref_name }}"
-          NUM='\([0-9]+\)'
-          
-          tag_to_versions() {
-            sed -e "s:v$NUM\.$NUM\.$NUM:MAJOR=\1\nMINOR=\2\nPATCH=\3\n:"
-          }
-          
-          printf '%s' "$TAG" | tag_to_versions "$TAG"
-          printf '%s' "$TAG" | tag_to_versions "$TAG" | while read -r CHUNK; do
-            echo "${CHUNK}" >> $GITHUB_ENV
-          done
+        run: bash ./parse_tag.sh "${{ github.ref_name }}"
     
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
