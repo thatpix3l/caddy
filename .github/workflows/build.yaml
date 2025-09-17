@@ -33,7 +33,7 @@ jobs:
     
       - name: Parse Commit Tag Version
         run: |
-          TAG=${{ github.ref_name }}
+          TAG="${{ github.ref_name }}"
           NUM='\([0-9]+\)'
 
           tag_to_versions() {
@@ -44,6 +44,7 @@ jobs:
           VERSION_CHUNKS=($VERSION_CHUNKS)
 
           for chunk in VERSION_CHUNKS; do
+            echo "$chunk"
             echo "$chunk" >> $GITHUB_ENV
           done
     
