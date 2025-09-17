@@ -44,7 +44,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           file: ./Containerfile
           build-args: |
-            major="${{ env.MAJOR }}"
-            minor="${{ env.MINOR }}"
-            patch="${{ env.PATCH }}"
+            major=${{ env.MAJOR }}
+            minor=${{ env.MINOR }}
+            patch=${{ env.PATCH }}
     
