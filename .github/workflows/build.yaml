@@ -35,13 +35,13 @@ jobs:
         run: |
           TAG="${{ github.ref_name }}"
           NUM='\([0-9]+\)'
-
+          
           tag_to_versions() {
             sed -e "s/v$NUM\.$NUM\.$NUM/MAJOR=\1\nMINOR=\2\nPATCH=\3/\n"
           }
           
-          printf '%s' "$TAG" | tag_to_versions "$TAG" | while read -r chunk; do
-            echo "$chunk" >> $GITHUB_ENV
+          printf '%s' "$TAG" | tag_to_versions "$TAG" | while read -r CHUNK; do
+            echo "${CHUNK}" >> $GITHUB_ENV
           done
     
       - name: Set up Docker Buildx
@@ -52,7 +52,7 @@ jobs:
         with:
           push: true
           build-args: |
-            major=${{ env.MAJOR }}
-            minor=${{ env.MINOR }}
-            patch=${{ env.PATCH }}
+            major="${{ env.MAJOR }}"
+            minor="${{ env.MINOR }}"
+            patch="${{ env.PATCH }}"
     
