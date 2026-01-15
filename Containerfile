@@ -6,6 +6,7 @@ FROM docker.io/caddy:${major}.${minor}.${patch}-builder AS builder
 
 RUN xcaddy build \
     --with github.com/caddy-dns/cloudflare \
+    --with github.com/enum-gg/caddy-discord \
     --with github.com/mholt/caddy-dynamicdns
 
 FROM docker.io/library/caddy
