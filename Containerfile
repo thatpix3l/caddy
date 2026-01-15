@@ -1,8 +1,6 @@
-ARG major
-ARG minor
-ARG patch
+ARG BUILDER_VERSION
 
-FROM docker.io/caddy:${major}.${minor}.${patch}-builder AS builder
+FROM docker.io/caddy:${BUILDER_VERSION}-builder AS builder
 
 RUN xcaddy build \
     --with github.com/caddy-dns/cloudflare \

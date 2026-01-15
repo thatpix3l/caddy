@@ -4,7 +4,7 @@ NUM='([0-9]+)'
 SEMVER_REGEX="v$NUM\.$NUM\.$NUM"
 
 tag_to_versions() {
-  sed -E "s/$SEMVER_REGEX/MAJOR=\1\nMINOR=\2\nPATCH=\3\n/"
+  sed -E "s/$SEMVER_REGEX/MAJOR=\1\nMINOR=\2\nPATCH=\3\nBUILDER_VERSION=\1.\2\n/"
 }
 
 printf '%s' "$TAG" | tag_to_versions | while read -r CHUNK; do
