@@ -1,4 +1,4 @@
-ARG BUILDER_VERSION
+ARG BUILDER_VERSION=2
 
 FROM docker.io/caddy:${BUILDER_VERSION}-builder AS builder
 

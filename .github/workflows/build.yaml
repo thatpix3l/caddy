@@ -31,9 +31,6 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{version}}
     
-      - name: Parse Commit Tag Version
-        run: bash ./parse_tag.sh "${{ github.ref_name }}"
-    
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       
@@ -44,7 +41,5 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           file: ./Containerfile
           build-args: |
-            major=${{ env.MAJOR }}
-            minor=${{ env.MINOR }}
-            patch=${{ env.PATCH }}
+            BUILDER_VERSION=${{ fromJson(steps.meta.outputs.json).major }}.${{ fromJson(steps.meta.outputs.json).minor }}
     
