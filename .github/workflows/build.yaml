@@ -34,9 +34,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         
-      - name: View Metadata
-        run: echo ${{ steps.meta.outputs.json }}
-
       - name: Build and Push
         uses: docker/build-push-action@v6
         with:
@@ -44,4 +41,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           file: ./Containerfile
           build-args: |
-            BUILDER_VERSION=${{ fromJson(steps.meta.outputs.json).major }}.${{ fromJson(steps.meta.outputs.json).minor }}
+            BUILDER_VERSION=${{ fromJson(steps.meta.outputs.json).tag-names[1] }}
